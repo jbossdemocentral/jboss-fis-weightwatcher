@@ -1,0 +1,35 @@
+package com.redhat.weightwatcher;
+
+import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.JsonNode;
+import java.util.Date; 
+import java.text.SimpleDateFormat;
+import com.redhat.weightwatcher.Observation;
+
+rule "ruleInsertObservation"
+	salience 10000
+when
+    fact : Fact( factname == "Observation" )
+then
+    ObjectMapper mapper = new ObjectMapper();
+    JsonNode node = mapper.readTree(fact.getFactjson( ).toString( ));
+    Integer userid = node.get("userid").getIntValue();
+    SimpleDateFormat factSDF = new SimpleDateFormat("yyyy-M-d HH:mm:ss zzz");
+    Date obsdate = factSDF.parse( node.get("obsdate").getTextValue());
+    Integer obsvalue = node.get("obsvalue").getIntValue();
+    String obsname = node.get( "obsname" ).getTextValue();
+
+    Observation observation = new Observation( );
+    observation.setUserid( userid );
+    observation.setObsname( obsname );
+	observation.setObsdate ( obsdate );
+	observation.setObsvalue( obsvalue ); 
+    insert( observation );
+
+    print("==>weightwatcher " + drools.getRule( ).getName( ) + "->" + 
+	observation.getUserid( )  + ":" + observation.getObsname( ) + ":" + observation.getObsdate( ) );
+end
+
+query "getObservation"
+	observation : Observation( )
+end

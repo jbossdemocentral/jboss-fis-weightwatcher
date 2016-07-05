@@ -1,0 +1,38 @@
+package com.redhat.weightwatcher;
+
+import org.codehaus.jackson.JsonNode;
+import org.codehaus.jackson.map.ObjectMapper;
+import com.redhat.weightwatcher.Goal;
+
+rule "ruleInsertGoal"
+	salience 10000
+when
+    	fact : Fact( factname == "Goal" )
+then
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode node = mapper.readTree(fact.getFactjson( ).toString( ));
+
+        Integer userid = node.get("userid").getIntValue();
+       	String goalname = node.get("goalname").getTextValue();
+        Integer target = node.get("target").getIntValue();
+        Integer start = node.get("start").getIntValue();
+        Integer low = node.get("low").getIntValue();
+        Integer high = node.get("high").getIntValue();
+
+
+    	Goal goal = new Goal(  );
+	    goal.setUserid( userid );
+	    goal.setGoalname( goalname );
+	    goal.setTarget( target );
+	    goal.setStart( start );
+	    goal.setLow( low );
+
+    	insert( goal );
+
+    	System.out.println("==>weightwatcher " + drools.getRule( ).getName( ) + "->" + 
+					goal.getUserid( )  + ":" + goal.getGoalname( ) );
+end
+
+query "getGoal"
+	goal : Goal( )
+end

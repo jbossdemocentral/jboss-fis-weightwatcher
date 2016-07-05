@@ -1,0 +1,53 @@
+package com.redhat.weightwatcher;
+
+import org.codehaus.jackson.JsonNode;
+import org.codehaus.jackson.map.ObjectMapper;
+import com.redhat.weightwatcher.GAS;
+
+function void print(String txt) {
+   System.out.println(txt);
+}
+
+rule "ruleInsertGAS"
+	salience 10000
+when
+    	fact : Fact( factname == "GAS" )
+then
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode node = mapper.readTree(fact.getFactjson( ).toString( ));
+        Integer userid = node.get("userid").getIntValue();
+        String goalname = node.get("goalname").getTextValue();
+        Integer besthi = node.get("besthi").getIntValue();
+        Integer bestlo = node.get("bestlo").getIntValue();
+        Integer morehi = node.get("morehi").getIntValue();
+        Integer morelo = node.get("morelo").getIntValue();
+        Integer exphi = node.get("exphi").getIntValue();
+        Integer explo = node.get("explo").getIntValue();
+        Integer lesshi = node.get("lesshi").getIntValue();
+        Integer lesslo = node.get("lesslo").getIntValue();
+        Integer worsthi = node.get("worsthi").getIntValue();
+        Integer worstlo = node.get("worstlo").getIntValue();
+
+    	GAS gas = new GAS(  );
+	   gas.setUserid( userid );
+	   gas.setGoalname( goalname );
+	   gas.setBesthi( besthi );
+	   gas.setBestlo( bestlo );
+	   gas.setMorehi( morehi );
+	   gas.setMorelo( morelo );
+	   gas.setExphi( exphi );
+	   gas.setExplo( explo );
+	   gas.setLesshi( lesshi );
+	   gas.setLesslo( lesslo );
+	   gas.setWorsthi( worsthi );
+	   gas.setWorstlo( worstlo );
+	
+    	insert( gas );
+
+    	System.out.println("==>weightwatcher " + drools.getRule( ).getName( ) + "->" + 
+					gas.getUserid( )  + ":" + gas.getGoalname( ) );
+end
+
+query "getGAS"
+	gas : GAS( )
+end

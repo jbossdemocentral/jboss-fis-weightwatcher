@@ -1,0 +1,25 @@
+package com.redhat.weightwatcher;
+
+import org.codehaus.jackson.JsonNode;
+import org.codehaus.jackson.map.ObjectMapper;
+
+rule "ruleInsertParticipant"
+	salience 10000
+when
+    fact : Fact( factname == "Participant" )
+then
+    ObjectMapper mapper = new ObjectMapper();
+    JsonNode node = mapper.readTree(fact.getFactjson( ).toString( ));
+    Integer userid = node.get("userid").getIntValue();
+    String username = node.get("username").getTextValue();
+    
+    Participant participant = new Participant( userid, username );
+    insert( participant );
+	System.out.println("==>username=" + username);
+    System.out.println("==>weightwatcher " + drools.getRule( ).getName( ) + "->" + 
+		participant.getUserid( )  + ":" + participant.getUsername( ) );
+end
+
+query "getParticipant"
+	participant : Participant( )
+end

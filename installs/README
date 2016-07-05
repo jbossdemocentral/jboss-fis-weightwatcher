@@ -1,0 +1,20 @@
+Download the following from the Red Hat Customer Portal
+
+ * CDK (cdk-2.1.0.zip)
+ * OSX - RHEL VirtualBox (rhel-cdk-kubernetes-7.2-25.x86_64.vagrant-virtualbox.box)
+ * Linux - RHEL libvirt (rhel-cdk-kubernetes-7.2-25.x86_64.vagrant-libvirt.box)
+ * Windows - RHEL VMWare (rhel-cdk-kubernetes-7.2-25.x86_64.vagrant-vmware-fusion.box)
+ * OSX - OpenShift v3.1 MacOSX Client (oc-3.1.1.6-macosx.tar.gz)
+ * Linux - OpenShift v3.1 Linux Client (oc-3.1.1.6-linux.tar.gz)
+ * Windows - OpenShift v3.1 Windows Client (oc-3.1.1.6-windows.zip)
+
+and copy to this directory for the init script to work.
+
+Ensure that this file is executable by running:
+
+chmod +x <path-to-project>/installs/cdk-2.1.0.zip
+chmod +x <path-to-project>/installs/rhel-cdk-kubernetes-7.2-25.x86_64.vagrant-virtualbox.box
+chmod +x <path-to-project>/installs/rhel-cdk-kubernetes-7.2-25.x86_64.vagrant-libvirt.box
+chmod +x <path-to-project>/installs/rhel-cdk-kubernetes-7.2-25.x86_64.vagrant-vmware-fusion.box
+chmod +x <path-to-project>/installs/oc-3.1.1.6-macosx.tar.gz
+chmod +x <path-to-project>/installs/oc-3.1.1.6-linux.tar.gz

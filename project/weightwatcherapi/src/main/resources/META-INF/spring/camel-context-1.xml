@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Configures the Camel Context-->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:cxf="http://camel.apache.org/schema/cxf"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://camel.apache.org/schema/cxf http://camel.apache.org/schema/cxf/camel-cxf.xsd
+       http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd">
+
+  	<bean id="amqConnectionFactory" class="io.fabric8.mq.core.MQConnectionFactory">
+  		<property name="userName" value="admin"/>
+		<property name="password" value="admin"/>
+	</bean>
+	<bean id="amq" class="io.fabric8.mq.camel.AMQComponent"></bean>
+  
+  	<bean id="beanCreator" class="com.redhat.weightwatcher.workingbean.BeanCreator" />
+  <camelContext xmlns="http://camel.apache.org/schema/spring">
+  	<restConfiguration component="jetty" port="9191" bindingMode="json"/>
+  
+  	<rest path="/weightwatcher">
+	    <get uri="/addParticipant/{userid}/{username}/{target}/{start}/{low}/{high}">
+	      <to uri="direct:addParticipant"/>
+	    </get>
+	    <get uri="/updateweight/{userid}/{obsDate}/{obsvalue}">
+	      <to uri="direct:updateweight"/>
+	    </get>
+	</rest>
+  <route id="addParticipant">
+    <from uri="direct:addParticipant"/>
+    <bean ref="beanCreator" method="addParticipant(${headers.userid},${headers.username})"/>
+    <marshal>
+      <json library="Jackson"/>
+    </marshal>
+    <bean ref="beanCreator" method="setParticipantFactJson(${headers.userid},${body})" />
+    <bean ref="beanCreator" method="addGoal(${headers.userid},${headers.target},${headers.start},${headers.low},${headers.high})"/>
+    <marshal>
+      <json library="Jackson"/>
+    </marshal>
+    <bean ref="beanCreator" method="setGoalFactJson(${headers.userid},${body})" />
+  </route>
+  <route id="updateweight">
+    <from uri="direct:updateweight"/>
+    <bean ref="beanCreator" method="addObservation(${headers.userid},${headers.obsDate},${headers.obsvalue})"/>
+    <marshal>
+      <json library="Jackson"/>
+    </marshal>
+    <log message="${body}" />
+    <bean ref="beanCreator" method="setObservationFactJson(${headers.userid},${body})" />
+    <bean ref="beanCreator" method="createSessionContent(${headers.userid})" />
+    <to uri="amq:queue:WEIGHTWATCHER"/>
+  </route>
+</camelContext>
+
+</beans>
