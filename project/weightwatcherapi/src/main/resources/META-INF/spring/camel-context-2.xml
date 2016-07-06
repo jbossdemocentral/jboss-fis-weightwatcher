@@ -61,7 +61,7 @@
       </when>
       <otherwise>
         <setBody>
-			<constant>Nothing matches!!!!!!</constant>
+					<constant>&lt;result&gt;Nothing matches&lt;/result&gt;</constant>
 	   	</setBody>
       </otherwise>
     </choice>
