@@ -64,7 +64,7 @@ http://weightwatcherapi-fisdemo.rhel-cdk.10.1.2.2.xip.io/weightwatcher/updatewei
 
 http://weightwatcherapi-fisdemo.rhel-cdk.10.1.2.2.xip.io/weightwatcher/updateweight/2/2015-04-25%2007:15:00%20EST/77
 
-http://weightwatcherapi-fisdemo.rhel-cdk.10.1.2.2.xip.io/updateweight/2/2015-04-28%2007:15:00%20EST/76
+http://weightwatcherapi-fisdemo.rhel-cdk.10.1.2.2.xip.io/weightwatcher/updateweight/2/2015-04-28%2007:15:00%20EST/76
 ```
 ![Update weight](doc/09-updateweight.png)
 ![Camel status](doc/10-status.png)
