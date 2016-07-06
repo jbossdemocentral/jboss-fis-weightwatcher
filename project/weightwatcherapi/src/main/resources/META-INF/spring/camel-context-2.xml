@@ -57,7 +57,6 @@
 				<setBody>
 					<xpath>/org.kie.server.api.model.ServiceResponse/result/result/text()</xpath>
 				</setBody>
-		   	<convertBodyTo type="org.w3c.dom.Document"/>
 		   	<log message="${body}" />
       </when>
       <otherwise>
