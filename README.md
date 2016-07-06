@@ -19,17 +19,31 @@ There are four Camel route that takes care of things
 Installation
 ----------------------------------
 Make sure you have installed Vagrant and Virtual box. run initCDK.sh to setup CDK and web services (SKIP this section if you have already installed)
-    
+
+		```
     $ ./initCDK.sh
+    ```
 
 Install the project on OpenShift by running init.sh
                                                                       
+    ```
     $ ./init.sh
-
+		```
+		
 Login to OpenShift console with USERNAME/PWD admin/admin             
 
+		```
     https://10.1.2.2:8443/console/                                    
-    
+		```
+![Overview Broker](doc/01-overview-broker.png)
+![Overview TCP Broker](doc/02-overview-tcpbroker.png)
+![Overview FUSE BRMS](doc/03-overview-apirule.png)
+
+Also Pods, services and route
+
+![Overview Broker](doc/04-pods.png)
+![Overview TCP Broker](doc/06-services.png)
+![Overview FUSE BRMS](doc/07-routes.png)
  
 Running the demo
 ----------------------------------
@@ -37,20 +51,25 @@ Running the demo
 Registering a new Participants:
 Before we start sending in weight, we need to register the participants and set their goal. 
 
-http://YOUREXPOSEDROUTE/weightwatcher/addParticipant/2/ipavlov@behaviorist.org/75/84/70/78
-
+```
+http://weightwatcherapi-fisdemo.rhel-cdk.10.1.2.2.xip.io/weightwatcher/addParticipant/2/ipavlov@behaviorist.org/75/84/70/78
+```
+![Add Participant](doc/08-addparticipant.png)
 
 Events - Updating weight:
 In a browser or any REST client app, trigger the event by updating the weight as we measure every-time. Each event will then pass into rule engine through our API. You should be able to see the calculated response from weight watcher. 
 
-http://YOUREXPOSEDROUTE/weightwatcher/updateweight/2/2015-04-20%2007:15:00%20EST/79
+```
+http://weightwatcherapi-fisdemo.rhel-cdk.10.1.2.2.xip.io/weightwatcher/updateweight/2/2015-04-20%2007:15:00%20EST/79
 
-http://YOUREXPOSEDROUTE/weightwatcher/updateweight/2/2015-04-25%2007:15:00%20EST/77
+http://weightwatcherapi-fisdemo.rhel-cdk.10.1.2.2.xip.io/weightwatcher/updateweight/2/2015-04-25%2007:15:00%20EST/77
 
-http://YOUREXPOSEDROUTEweightwatcher/updateweight/2/2015-04-28%2007:15:00%20EST/76
+http://weightwatcherapi-fisdemo.rhel-cdk.10.1.2.2.xip.io/updateweight/2/2015-04-28%2007:15:00%20EST/76
+```
+![Update weight](doc/09-updateweight.png)
+![Camel status](doc/10-status.png)
 
-
-Scaling up the application
+##Scaling up the application
 As the weight watcher became more popular, more clients wants to join the program, we need to  scale up our application to meet the demands, the very nature of Camel and OpenShift allows you do this with a few click of a button. 
 
 In the overview page, you should be able to see the exposed service, click on the upper arrow button to add one more pod running on OpenShift. 
