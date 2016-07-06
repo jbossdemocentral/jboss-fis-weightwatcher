@@ -57,6 +57,7 @@
 	   	<setBody>
 			<xpath>/org.kie.server.api.model.ServiceResponse/result/text()</xpath>
 	   	</setBody>
+	   	<convertBodyTo type="java.lang.String"/>
       </when>
       <otherwise>
         <setBody>
