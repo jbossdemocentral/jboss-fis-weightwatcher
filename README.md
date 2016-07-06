@@ -3,6 +3,7 @@ FIS Weightloss DEMO
 
 Cloud computing must handle a multitude of business events from many different devices. It must process, analyze, and react to the ever-changing business world. Red Hat JBoss A-MQ provides many common protocols to connect business events to devices, but business information without the ability to filter for effective customer responses, to detect meaningful behavior, and to react in a timely manner will cripple our customer relationships. Red Hat JBoss BRMS and Red Hat JBoss Fuse go beyond connecting and collecting events and use business rules to determine which events require action to enhance the customer experience. Join this hands-on session to: - Create asynchronous, event-driven integration between services using JBoss A-MQ - Create rules to to analyze business events with JBoss BRMS - Integrate rules, messages, and events with enterprise integration patterns (EIP) using JBoss Fuse - Deploy a multi-container microservices application on OpenShift by Red Hat
 The background of the scenario is a weight watcher program, which allows users to register with their weight loss target. Once registered, it will base on daily input from devices sent in to the system to provide calculated statistic of how this person is doing. 
+![BRMS Rules](doc/00-BRMSRules.png)
 
 This example expose two RESTFul Endpoints
 - one takes in participants data
@@ -12,7 +13,9 @@ There are four Camel route that takes care of things
 - Create an event base system by exposing RESTFul Endpoint using REST DSL with Camel 
 - Transform the entered data into JSON format required by BRMS, and then wrap these data in XML which is needed by decision server. 
 - Connecting to BRMS decision server with API Call 
-- Filter and parse the return result 
+- Filter and parse the return result
+
+![Fuse API](doc/00-FuseAPI.png)
 
 
 
