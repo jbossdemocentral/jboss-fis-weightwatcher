@@ -1,4 +1,4 @@
-FIS Weightloss DEMO
+FIS Weight Watcher DEMO
 ======================================
 
 Cloud computing must handle a multitude of business events from many different devices. It must process, analyze, and react to the ever-changing business world. Red Hat JBoss A-MQ provides many common protocols to connect business events to devices, but business information without the ability to filter for effective customer responses, to detect meaningful behavior, and to react in a timely manner will cripple our customer relationships. Red Hat JBoss BRMS and Red Hat JBoss Fuse go beyond connecting and collecting events and use business rules to determine which events require action to enhance the customer experience. Join this hands-on session to: - Create asynchronous, event-driven integration between services using JBoss A-MQ - Create rules to to analyze business events with JBoss BRMS - Integrate rules, messages, and events with enterprise integration patterns (EIP) using JBoss Fuse - Deploy a multi-container microservices application on OpenShift by Red Hat
