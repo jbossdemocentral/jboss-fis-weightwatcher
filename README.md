@@ -20,21 +20,18 @@ Installation
 ----------------------------------
 Make sure you have installed Vagrant and Virtual box. run initCDK.sh to setup CDK and web services (SKIP this section if you have already installed)
 
-		```
     $ ./initCDK.sh
-    ```
+
 
 Install the project on OpenShift by running init.sh
-                                                                      
-    ```
+
     $ ./init.sh
-		```
+
 		
 Login to OpenShift console with USERNAME/PWD admin/admin             
 
-		```
     https://10.1.2.2:8443/console/                                    
-		```
+
 ![Overview Broker](doc/01-overview-broker.png)
 ![Overview TCP Broker](doc/02-overview-tcpbroker.png)
 ![Overview FUSE BRMS](doc/03-overview-apirule.png)
