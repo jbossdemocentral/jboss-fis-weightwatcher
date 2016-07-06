@@ -59,7 +59,12 @@ echo
 echo
 echo "Login to OpenShfit"
 echo
-oc login -u admin -p admin
+oc login https://10.1.2.2:8443 -u admin -p admin
+
+echo
+echo "Use new projects"
+echo
+oc new-project fisdemo
 
 echo
 echo "Import weightwatcher template:"
@@ -73,53 +78,44 @@ oc new-app decisionserver62-weightwatcher-s2i --param=KIE_SERVER_PASSWORD=kieser
 
 
 echo
+echo "Add amq62 template:"
+echo
+oc create -f support/amq62-basic.json
+
+echo
 echo "Create a new project and deploy the Message Server:"
 echo
 oc new-app amq62-basic --param=MQ_PROTOCOL=openwire
 
+
 echo
-echo "Install Swagger"
+echo "Add fuse template:"
 echo
-oc new-app -f fusetemplate.json --param=GIT_REPO=https://github.com/weimeilin79/weightwatcherapi.git
+oc create -f support/fis-image-streams.json
+
+echo
+echo "Install Fuse RESTful endpoints"
+echo
+oc new-app -f support/fusetemplate.json
 
 
 
 echo
-echo "========================================================================="
-echo "=                                                                       ="
-echo "=  Now you can start build and deploy JBoss Fuse Camel services         ="
-echo "=  Under project directory ./projects/healthcaredemo                    ="
-echo "=                                                                       ="
-echo "=     $ mvn -Pf8-local-deploy                                           ="
-echo "=                                                                       ="
-echo "=  After projects are depolyed, go back to the demo root directory      ="
-echo "=  (where the init.sh is) we want to create two extra services          ="
-echo "=                                                                       ="
-echo "=     $ oc create -f support/clinichl7service.json                      ="
-echo "=     $ oc create -f support/labrestservice.json                        ="
-echo "=                                                                       ="
-echo "=  Also expose a new route for the Lab Rest API Service                 ="
-echo "=                                                                       ="
-echo "=     $ oc create -f support/labrestapi.json                            ="
-echo "=                                                                       ="
-echo "=  Install GUI page and frontend for healthcare install                 ="
-echo "=                                                                       ="
-echo "=     $ oc new-app --image-stream=openshift/php:5.5 --name=healthcareweb --code=https://github.com/weimeilin79/healthcareweb.git "
-echo "=                                                                       ="
-echo "=  Install GUI page and frontend for healthcare install                 ="
-echo "=                                                                       ="
-echo "=     $ oc create -f support/healthwebroute.json                        ="
-echo "=                                                                       ="
-echo "=  Login to OpenShift console with USERNAME/PWD admin/admin             ="
-echo "=                                                                       ="
-echo "=     https://10.1.2.2:8443/console/                                    ="
-echo "=                                                                       ="
-echo "=                                                                       ="
-echo "=  Finally, start playing with the demo by registering your info        ="
-echo "=                                                                       ="
-echo "=     http://healthcareweb-demo.rhel-cdk.10.1.2.2.xip.io/health.html    ="
-echo "=                                                                       ="
-echo "=  This completes the $DEMO setup.                           ="
-echo "=                                                                       ="
-echo "========================================================================="
-echo                                                                    
+echo "=============================================================================================="
+echo "=                                                                                            ="
+echo "=  Access OpenShift console: https://10.1.2.2:8443/console                                   ="
+echo "=  With ID/PWD admin/admin                                                                   ="
+echo "=  http://healthcareweb-demo.rhel-cdk.10.1.2.2.xip.io/health.html                            ="
+echo "=                                                                                            ="
+echo "=  Register the participants and set their goal. .                                           ="
+echo "=                                                                                            ="
+echo "=  http://YOUREXPOSEDROUTE/weightwatcher/addParticipant/2/ipavlov@behaviorist.org/75/84/70/78="
+echo "=                                                                                            ="
+echo "=  And then send the observation                                                             ="
+echo "=                                                                                            ="
+echo "=  http://YOUREXPOSEDROUTE/weightwatcher/updateweight/2/2015-04-20%2007:15:00%20EST/79       ="
+echo "=  http://YOUREXPOSEDROUTE/weightwatcher/updateweight/2/2015-04-25%2007:15:00%20EST/77       ="
+echo "=  http://YOUREXPOSEDROUTEweightwatcher/updateweight/2/2015-04-28%2007:15:00%20EST/76        ="
+echo "=                                                                                            ="
+echo "=============================================================================================="
+echo
