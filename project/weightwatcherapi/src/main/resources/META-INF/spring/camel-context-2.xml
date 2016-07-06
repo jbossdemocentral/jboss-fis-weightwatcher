@@ -65,7 +65,6 @@
 				</setHeader>
 				<setBody>
 					<simple>${headers.weightchange} \n &lt;BR&gt; ${headers.maximumweight} \n &lt;BR&gt; ${headers.averagedweight} </simple>
-				<xpath>/org.kie.server.api.model.ServiceResponse/result/result</xpath>
 				</setBody>
 		   	<convertBodyTo type="java.lang.String"/>
       </when>
