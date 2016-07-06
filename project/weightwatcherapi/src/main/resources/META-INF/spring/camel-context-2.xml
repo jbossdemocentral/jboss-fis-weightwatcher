@@ -54,17 +54,8 @@
     <choice>
       <when>
         <xpath>/org.kie.server.api.model.ServiceResponse/type = 'SUCCESS'</xpath>
-		   	<setHeader headerName="weightchange">
-					<xpath>/org.kie.server.api.model.ServiceResponse/result/result/query-results/row[1]/identifier/com.redhat.weightwatcher.Fact/facttxt/text()</xpath>
-				</setHeader>
-				<setHeader headerName="maximumweight">
-					<xpath>/org.kie.server.api.model.ServiceResponse/result/result/query-results/row[2]/identifier/com.redhat.weightwatcher.Fact/facttxt/text()</xpath>
-				</setHeader>
-				<setHeader headerName="averagedweight">
-					<xpath>/org.kie.server.api.model.ServiceResponse/result/result/query-results/row[3]/identifier/com.redhat.weightwatcher.Fact/facttxt/text()</xpath>
-				</setHeader>
 				<setBody>
-					<simple>${headers.weightchange} \n &lt;BR&gt; ${headers.maximumweight} \n &lt;BR&gt; ${headers.averagedweight} </simple>
+					<xpath>/org.kie.server.api.model.ServiceResponse/result/result/text()</xpath>
 				</setBody>
 		   	<convertBodyTo type="java.lang.String"/>
       </when>

@@ -17,7 +17,7 @@
   
   	<bean id="beanCreator" class="com.redhat.weightwatcher.workingbean.BeanCreator" />
   <camelContext xmlns="http://camel.apache.org/schema/spring">
-  	<restConfiguration component="jetty" port="9191" bindingMode="json"/>
+  	<restConfiguration component="jetty" port="9191" bindingMode="auto"/>
   
   	<rest path="/weightwatcher">
 	    <get uri="/addParticipant/{userid}/{username}/{target}/{start}/{low}/{high}">
